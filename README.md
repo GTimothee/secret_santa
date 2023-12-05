@@ -1,4 +1,4 @@
-# Secret Santa
+# Secret Santa 🎅🎁🎄
 
 This project allows you to turn the painful task of assigning people for a secret santa into a fun game !
 

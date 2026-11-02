@@ -3,11 +3,13 @@
 import argparse
 import random
 from name_encoder import NameEncoder
+from emojis_encoder import EmojiEncoder
 from names import get_names
 
+random.seed(15)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-p', '--participants', type=str, default="participants.txt", required=True)
+parser.add_argument('-p', '--participants', type=str, default="participants.txt")
 parser.add_argument('-v', '--shift-value', type=int, default=3, help="shift value to use for the Cesar cipher", dest="shift_value")
 args = parser.parse_args()
 
@@ -52,10 +54,14 @@ if __name__ == "__main__":
         print(f"{name} -> {assignment[idx]}")
 
     print(f"\nEncoding result...")
-    encoder = NameEncoder(code=args.shift_value)
-    max_length = max([len(n) for n in assignment])
-    encoded_res = { name: encoder.encode_name(assignment[idx], max_length) for name, idx in original.items() }
+    # encoder = NameEncoder(code=args.shift_value)
+    # max_length = max([len(n) for n in assignment])
+    # encoded_res = { name: encoder.encode_name(assignment[idx], max_length) for name, idx in original.items() }
+    encoded_res = { name: EmojiEncoder.encode_name(assignment[idx]) for name, idx in original.items() }
 
     print(f"\nResult:")
-    for k, v in encoded_res.items():
-        print(f"{k} -> {v}")
+    with open('output.txt', 'w', encoding='utf-8') as f:
+        for k, v in encoded_res.items():
+            s = f"{k} -> {''.join(v)}\n"
+            f.write(s)
+            # print(s)
